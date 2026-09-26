@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MainDraw — USTA roster, National Ranking, and UTR lookup</title>
+  <meta name="description" content="MainDraw is an unofficial iOS app for tennis parents and coaches. Open a USTA tournament Players list, then look up National Ranking and UTR in sortable columns. 30 days of free Look Up for new installs.">
+  <meta name="apple-itunes-app" content="app-id=6810411828">
+  <link rel="canonical" href="https://vibecodingisfun.github.io/maindraw/">
+  <link rel="icon" href="assets/icon.png" type="image/png">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="MainDraw — USTA roster + UTR lookup">
+  <meta property="og:description" content="Read a USTA tournament Players list and look up National Ranking and UTR without copying names between apps.">
+  <meta property="og:url" content="https://vibecodingisfun.github.io/maindraw/">
+  <meta property="og:image" content="https://vibecodingisfun.github.io/maindraw/assets/roster.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,650;9..144,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Sans+Condensed:wght@500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "SoftwareApplication",
+        "name": "MainDraw",
+        "url": "https://vibecodingisfun.github.io/maindraw/",
+        "applicationCategory": "SportsApplication",
+        "operatingSystem": "iOS 17",
+        "downloadUrl": "https://apps.apple.com/us/app/maindraw/id6810411828",
+        "installUrl": "https://apps.apple.com/us/app/maindraw/id6810411828",
+        "image": "https://vibecodingisfun.github.io/maindraw/assets/icon.png",
+        "description": "Unofficial iOS tool that reads a USTA tournament Players list and looks up National Ranking and UTR. Sign in with your own USTA and Universal Tennis accounts. Not affiliated with USTA or Universal Tennis.",
+        "author": { "@type": "Person", "name": "BO TAO" },
+        "offers": {
+          "@type": "AggregateOffer",
+          "lowPrice": "0",
+          "highPrice": "9.99",
+          "priceCurrency": "USD",
+          "offerCount": "3"
+        }
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What is MainDraw?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "MainDraw is an unofficial iOS app for tennis parents and coaches. It opens USTA tournament pages, reads the Players list, and looks up National Ranking and UTR so you do not have to copy names between apps."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Is MainDraw affiliated with USTA or Universal Tennis?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No. MainDraw is an unofficial tool. It is not affiliated with, endorsed by, or sponsored by USTA or Universal Tennis. You use your own accounts and must follow their terms."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Do I need USTA and UTR accounts?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Live Look Up uses your own Universal Tennis sign-in. Opening USTA pages and family schedules uses your USTA session. Browsing, bookmarks, and Demo Mode work without a MainDraw subscription. Demo Mode uses an offline sample roster and needs no accounts."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How does Look Up work?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Open a tournament Players list, tap Read to extract the roster, then tap Look Up. MainDraw annotates each player with National Ranking, UTR, and a match-confidence score in sortable columns. Session cookies stay on your device."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can I see a child’s USTA schedule?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. The Accounts tab switches family players the way Switch Accounts works in the USTA Tennis app, then opens that player’s Upcoming and Completed schedule. From there you can open a tournament, go to Players, and run Read and Look Up."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How much does MainDraw cost?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "MainDraw is free to download. New installs include 30 days of free Look Up. After the trial, Look Up is $0.99 per month or $9.99 per year through Apple. Browsing USTA and UTR pages, bookmarks, and Demo Mode stay available without a subscription."
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="nav">
+    <a class="brand" href="#top">
+      <img src="assets/icon.png" width="36" height="36" alt="">
+      <span>MainDraw</span>
+    </a>
+    <nav>
+      <a href="#how">How it works</a>
+      <a href="#tabs">Tabs</a>
+      <a href="#faq">FAQ</a>
+      <a class="nav-cta" href="https://apps.apple.com/us/app/maindraw/id6810411828">App Store</a>
+    </nav>
+  </header>
+
+  <main id="main">
+    <section class="hero" id="top">
+      <div class="hero-copy">
+        <p class="eyebrow">For tennis parents and coaches</p>
+        <h1>Read the roster.<br>Look up the ranks.</h1>
+        <p class="lede">
+          MainDraw opens a USTA tournament Players list, then looks up
+          National Ranking and UTR in sortable columns—so you stop copying
+          names between apps.
+        </p>
+        <div class="cta-row">
+          <a class="store-badge" href="https://apps.apple.com/us/app/maindraw/id6810411828">
+            <img src="assets/app-store-badge-white.svg" width="168" height="56" alt="Download on the App Store">
+          </a>
+          <p class="cta-note">Free to download · iPhone &amp; iPad · iOS 17+</p>
+        </div>
+        <p class="disclaimer">
+          Unofficial tool. Not affiliated with, endorsed by, or sponsored by
+          USTA or Universal Tennis.
+        </p>
+      </div>
+
+      <div class="hero-stage" aria-hidden="false">
+        <figure class="device tablet">
+          <img src="assets/roster.jpg" width="800" height="1066" alt="USTA Players list annotated with National Ranking, singles UTR, doubles UTR, and match confidence">
+        </figure>
+        <figure class="device phone">
+          <img src="assets/tournament.jpg" width="320" height="692" alt="Tournament tab showing USTA Find Tournaments Sort and Filter">
+        </figure>
+      </div>
+    </section>
+
+    <section class="band" id="how">
+      <header class="section-head">
+        <p class="eyebrow">The flow</p>
+        <h2>Four taps from search to rankings</h2>
+      </header>
+      <ol class="draw">
+        <li>
+          <span class="seed">1</span>
+          <h3>Find the event</h3>
+          <p>Tournament opens USTA Find Tournaments with Sort &amp; Filter ready. Search by location, dates, and junior or adult.</p>
+        </li>
+        <li>
+          <span class="seed">2</span>
+          <h3>Open Players</h3>
+          <p>Open the tournament, then the Players tab. Overview and Draws are not enough—Read needs the entry list on screen.</p>
+        </li>
+        <li>
+          <span class="seed">3</span>
+          <h3>Read the roster</h3>
+          <p>One tap extracts the names. Singles stay one player per row; doubles teams stay paired.</p>
+        </li>
+        <li>
+          <span class="seed">4</span>
+          <h3>Look Up</h3>
+          <p>National Ranking, UTR, and match confidence land in columns you can sort. Sign in to Universal Tennis once, on this device.</p>
+        </li>
+      </ol>
+    </section>
+
+    <section class="band alt" id="tabs">
+      <header class="section-head">
+        <p class="eyebrow">On the tab bar</p>
+        <h2>Five places you actually live</h2>
+      </header>
+      <ul class="tabs">
+        <li>
+          <h3>Home</h3>
+          <p>How to Use, Try Demo, plans, privacy, and support. The rest of the app stays one tap away.</p>
+        </li>
+        <li>
+          <h3>UTR</h3>
+          <p>Sign in to Universal Tennis with your own account. The session stays on the device in WebKit—MainDraw does not run a separate login.</p>
+        </li>
+        <li>
+          <h3>USTA</h3>
+          <p>The full USTA site when you already have a Players page, a bookmark, or need to browse beyond search.</p>
+        </li>
+        <li>
+          <h3>Tournament</h3>
+          <p>Find events, then Read and Look Up from the same Players list. Search is public; empty results are usually filters, not a missing login.</p>
+        </li>
+        <li>
+          <h3>Accounts</h3>
+          <p>Switch family players like Switch Accounts in the USTA Tennis app, then open that child’s Upcoming and Completed schedule.</p>
+        </li>
+      </ul>
+    </section>
+
+    <section class="band" id="try">
+      <div class="split">
+        <div>
+          <p class="eyebrow">No accounts required</p>
+          <h2>Try Demo on the Home tab</h2>
+          <p>
+            Demo Mode uses an offline sample roster. Tap Read, then Look Up,
+            and see the annotated columns without USTA or Universal Tennis
+            sign-in.
+          </p>
+        </div>
+        <dl class="price">
+          <div>
+            <dt>Download</dt>
+            <dd>Free</dd>
+          </div>
+          <div>
+            <dt>Look Up trial</dt>
+            <dd>30 days for new installs</dd>
+          </div>
+          <div>
+            <dt>Then</dt>
+            <dd>$0.99 / month or $9.99 / year</dd>
+          </div>
+          <div>
+            <dt>Always free</dt>
+            <dd>Browse, bookmarks, Demo</dd>
+          </div>
+        </dl>
+      </div>
+    </section>
+
+    <section class="band alt" id="faq">
+      <header class="section-head">
+        <p class="eyebrow">Questions</p>
+        <h2>What parents usually ask</h2>
+      </header>
+      <div class="faq">
+        <details open>
+          <summary>What is MainDraw?</summary>
+          <p>An unofficial iOS app that reads a USTA tournament Players list and looks up National Ranking and UTR for those players. Built for parents and coaches who otherwise bounce between USTA and Universal Tennis.</p>
+        </details>
+        <details>
+          <summary>Is this an official USTA or UTR app?</summary>
+          <p>No. MainDraw is not affiliated with, endorsed by, or sponsored by USTA or Universal Tennis. You use your own accounts and are responsible for following their terms.</p>
+        </details>
+        <details>
+          <summary>Do I have to subscribe to browse tournaments?</summary>
+          <p>No. Browsing USTA and UTR pages, bookmarks, and Demo Mode stay available without a subscription. Look Up is free for 30 days after a new install, then needs a monthly or yearly plan through Apple.</p>
+        </details>
+        <details>
+          <summary>How do family / child accounts work?</summary>
+          <p>Sign in as the parent on the Accounts tab, pick a child, and MainDraw opens that player’s Upcoming and Completed schedule. From a tournament, open Players, then Read and Look Up—the same flow as the USTA tab.</p>
+        </details>
+        <details>
+          <summary>Where does my login data go?</summary>
+          <p>USTA and Universal Tennis session cookies stay on your device. MainDraw does not operate its own user accounts or upload those sessions to a MainDraw server. Look Up calls those services directly from the phone. See the <a href="https://vibecodingisfun.github.io/maindraw_privacy/">privacy policy</a>.</p>
+        </details>
+        <details>
+          <summary>How do I get help?</summary>
+          <p>Email <a href="mailto:taobo2000@gmail.com">taobo2000@gmail.com</a>. Manage or cancel a subscription in iOS Settings → Apple ID → Subscriptions.</p>
+        </details>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <div class="foot-brand">
+      <img src="assets/icon.png" width="40" height="40" alt="">
+      <div>
+        <strong>MainDraw</strong>
+        <p>Unofficial USTA roster + UTR lookup for iPhone and iPad.</p>
+      </div>
+    </div>
+    <ul>
+      <li><a href="https://apps.apple.com/us/app/maindraw/id6810411828">App Store</a></li>
+      <li><a href="https://vibecodingisfun.github.io/maindraw_privacy/">Privacy Policy</a></li>
+      <li><a href="https://www.apple.com/legal/internet-services/itunes/dev/stdeula/">Terms of Use</a></li>
+      <li><a href="mailto:taobo2000@gmail.com">Support</a></li>
+    </ul>
+    <p class="fine">
+      MainDraw is not affiliated with USTA or Universal Tennis.
+      © 2026 BO TAO.
+    </p>
+  </footer>
+</body>
+</html>
