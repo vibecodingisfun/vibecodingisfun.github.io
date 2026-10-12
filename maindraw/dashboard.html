@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MainDraw 通知</title>
+  <meta name="robots" content="noindex">
+  <link rel="icon" href="assets/icon.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,560;9..144,680&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --court: #163326;
+      --court-deep: #0c1f18;
+      --line: #efe8d6;
+      --ball: #e8c84a;
+      --ink: #142018;
+      --muted: #5c675e;
+      --paper: #f3ecdc;
+      --card: #fffdf8;
+      --danger: #8c2f24;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ink);
+      font-family: "IBM Plex Sans", sans-serif;
+      background:
+        linear-gradient(180deg, rgba(22, 51, 38, 0.05), transparent 12rem),
+        repeating-linear-gradient(
+          90deg,
+          transparent,
+          transparent 3.4rem,
+          rgba(22, 51, 38, 0.045) 3.4rem,
+          rgba(22, 51, 38, 0.045) calc(3.4rem + 1px)
+        ),
+        var(--paper);
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      align-items: end;
+      padding: 1.6rem 6vw 1rem;
+    }
+    h1 {
+      margin: 0;
+      font-family: Fraunces, serif;
+      font-weight: 680;
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      letter-spacing: -0.03em;
+    }
+    header p { margin: 0.35rem 0 0; color: var(--muted); max-width: 36rem; }
+    .mark {
+      font-size: 0.78rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--court);
+      font-weight: 600;
+    }
+    main {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(16rem, 0.8fr);
+      gap: 1.25rem;
+      padding: 0 6vw 3rem;
+    }
+    section, .preview {
+      background: var(--card);
+      border: 1px solid rgba(22, 51, 38, 0.12);
+      border-radius: 1.2rem;
+      padding: 1.2rem 1.25rem 1.3rem;
+      box-shadow: 0 18px 40px rgba(12, 31, 24, 0.06);
+    }
+    label { display: block; font-weight: 600; margin-bottom: 0.45rem; }
+    textarea, input[type="password"] {
+      width: 100%;
+      border: 1px solid rgba(22, 51, 38, 0.2);
+      border-radius: 0.8rem;
+      padding: 0.8rem 0.9rem;
+      font: inherit;
+      color: inherit;
+      background: #fff;
+    }
+    textarea { min-height: 8.5rem; resize: vertical; }
+    textarea:focus, input:focus {
+      outline: 2px solid var(--ball);
+      border-color: var(--court);
+    }
+    .row { display: flex; flex-wrap: wrap; gap: 0.6rem; align-items: center; margin-top: 0.8rem; }
+    button {
+      border: 0;
+      border-radius: 999px;
+      padding: 0.65rem 1.1rem;
+      font: inherit;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    button.primary { background: var(--court); color: var(--line); }
+    button.quiet { background: transparent; color: var(--danger); }
+    button:disabled { opacity: 0.55; cursor: wait; }
+    .status { color: var(--muted); font-size: 0.92rem; }
+    .switch {
+      margin-top: 1.2rem;
+      padding-top: 1rem;
+      border-top: 1px dashed rgba(22, 51, 38, 0.2);
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+    .switch strong { color: var(--ink); }
+    details { margin-top: 1rem; }
+    details summary { cursor: pointer; color: var(--court); font-weight: 600; }
+    .phone {
+      width: min(100%, 18.5rem);
+      margin: 0.4rem auto 0;
+      background: var(--court-deep);
+      color: var(--line);
+      border-radius: 1.6rem;
+      padding: 0.7rem;
+    }
+    .screen {
+      background: #f7f4ee;
+      color: var(--ink);
+      border-radius: 1.15rem;
+      min-height: 16rem;
+      padding: 1.1rem 1rem 1.3rem;
+    }
+    .screen .app {
+      font-family: Fraunces, serif;
+      font-size: 1.7rem;
+      font-weight: 680;
+      letter-spacing: -0.03em;
+    }
+    .screen .tag { color: var(--muted); font-size: 0.85rem; margin-top: 0.2rem; }
+    .screen .note {
+      margin-top: 0.8rem;
+      font-size: 0.95rem;
+      white-space: pre-wrap;
+    }
+    .screen .empty { margin-top: 0.8rem; color: var(--muted); font-size: 0.9rem; }
+    @media (max-width: 800px) {
+      main { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div>
+      <div class="mark">MainDraw desk</div>
+      <h1>给 Home 写一句话</h1>
+      <p>这句话会出现在 App 的 Home 标题下面。留空再发布，就是把它清掉。日期开关不在这里改。</p>
+    </div>
+  </header>
+  <main>
+    <section>
+      <label for="message">现在要显示的话</label>
+      <textarea id="message" placeholder="例如：National Ranking stays included until a date is announced."></textarea>
+      <div class="row">
+        <button class="primary" id="publish" type="button">发布</button>
+        <button class="quiet" id="clear" type="button">清空</button>
+        <span class="status" id="status">正在读取网站上的文件…</span>
+      </div>
+      <div class="switch">
+        日期开关现在是 <strong id="switch-value">…</strong>。
+        要改日期，直接编辑 <code>premium-switch.json</code>，而且只改一次。Premium 审核通过之前不要写入日期。
+      </div>
+      <details>
+        <summary>发布用的 GitHub token</summary>
+        <p class="status">只存在这台浏览器里，不会写进网页。需要一个能改这个仓库文件的 token。</p>
+        <input id="token" type="password" autocomplete="off" placeholder="github_pat_…">
+        <div class="row">
+          <button class="primary" id="save-token" type="button">记住 token</button>
+        </div>
+      </details>
+    </section>
+    <aside class="preview">
+      <div class="mark">Home 上的样子</div>
+      <div class="phone">
+        <div class="screen">
+          <div class="app">MainDraw</div>
+          <div class="tag">Read a USTA roster and look up National Ranking and UTR</div>
+          <div class="note" id="preview" hidden></div>
+          <div class="empty" id="preview-empty">没有通知。标题下面是空的。</div>
+        </div>
+      </div>
+    </aside>
+  </main>
+  <script>
+    const repo = "vibecodingisfun/vibecodingisfun.github.io";
+    const path = "maindraw/home-message.json";
+    const tokenKey = "maindrawDeskToken";
+    const messageBox = document.querySelector("#message");
+    const status = document.querySelector("#status");
+    const preview = document.querySelector("#preview");
+    const previewEmpty = document.querySelector("#preview-empty");
+    const tokenBox = document.querySelector("#token");
+
+    function showPreview(text) {
+      const trimmed = text.trim();
+      preview.hidden = !trimmed;
+      preview.textContent = trimmed;
+      previewEmpty.hidden = !!trimmed;
+    }
+
+    messageBox.addEventListener("input", () => showPreview(messageBox.value));
+
+    tokenBox.value = localStorage.getItem(tokenKey) || "";
+    document.querySelector("#save-token").addEventListener("click", () => {
+      const token = tokenBox.value.trim();
+      if (!token) {
+        localStorage.removeItem(tokenKey);
+        status.textContent = "这台浏览器不再记住 token。";
+        return;
+      }
+      localStorage.setItem(tokenKey, token);
+      status.textContent = "token 只留在这台浏览器。";
+    });
+
+    async function readPublic() {
+      const [messageRes, switchRes] = await Promise.all([
+        fetch("home-message.json?ts=" + Date.now(), { cache: "no-store" }),
+        fetch("premium-switch.json?ts=" + Date.now(), { cache: "no-store" })
+      ]);
+      const messageFile = await messageRes.json();
+      const switchFile = await switchRes.json();
+      messageBox.value = typeof messageFile.message === "string" ? messageFile.message : "";
+      showPreview(messageBox.value);
+      const when = switchFile.premiumRequiredAt;
+      document.querySelector("#switch-value").textContent = when ? when : "还没定（null）";
+      status.textContent = messageBox.value ? "网站上现在有一条通知。" : "网站上现在没有通知。";
+    }
+
+    async function writeMessage(text) {
+      const token = localStorage.getItem(tokenKey);
+      if (!token) {
+        status.textContent = "先在下面记住一个能改仓库的 GitHub token。";
+        document.querySelector("details").open = true;
+        return;
+      }
+      const buttons = document.querySelectorAll("button");
+      buttons.forEach((button) => { button.disabled = true; });
+      status.textContent = "正在写到网站…";
+      try {
+        const current = await fetch("https://api.github.com/repos/" + repo + "/contents/" + path, {
+          headers: {
+            Authorization: "Bearer " + token,
+            Accept: "application/vnd.github+json"
+          }
+        });
+        const meta = await current.json();
+        if (!current.ok) throw new Error(meta.message || "读不到文件");
+        const payload = { message: text.trim() ? text.trim() : null };
+        const body = JSON.stringify(payload, null, 2) + "\n";
+        const content = btoa(unescape(encodeURIComponent(body)));
+        const saved = await fetch("https://api.github.com/repos/" + repo + "/contents/" + path, {
+          method: "PUT",
+          headers: {
+            Authorization: "Bearer " + token,
+            Accept: "application/vnd.github+json",
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            message: payload.message ? "Update MainDraw home message" : "Clear MainDraw home message",
+            content,
+            sha: meta.sha,
+            branch: "main"
+          })
+        });
+        const result = await saved.json();
+        if (!saved.ok) throw new Error(result.message || "没有写上");
+        status.textContent = "已写上。手机大约一分钟后打开 Home 能看到。";
+        showPreview(text);
+      } catch (error) {
+        status.textContent = "没写上：" + error.message;
+      } finally {
+        buttons.forEach((button) => { button.disabled = false; });
+      }
+    }
+
+    document.querySelector("#publish").addEventListener("click", () => writeMessage(messageBox.value));
+    document.querySelector("#clear").addEventListener("click", () => {
+      messageBox.value = "";
+      showPreview("");
+      writeMessage("");
+    });
+
+    readPublic().catch(() => {
+      status.textContent = "现在读不到网站上的文件。";
+    });
+  </script>
+</body>
+</html>
