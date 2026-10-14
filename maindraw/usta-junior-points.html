@@ -17,6 +17,31 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,650;9..144,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Sans+Condensed:wght@500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": "https://vibecodingisfun.github.io/maindraw/usta-junior-points.html",
+    "url": "https://vibecodingisfun.github.io/maindraw/usta-junior-points.html",
+    "name": "USTA junior points tables by round and level",
+    "description": "Unofficial layout of USTA junior tournament points by draw format and level. Numbers are USTA's, updated January 2025. MainDraw is not affiliated with, endorsed by, or sponsored by USTA.",
+    "inLanguage": "en",
+    "dateModified": "2026-10-14",
+    "isPartOf": {
+      "@type": "WebSite",
+      "name": "MainDraw",
+      "url": "https://vibecodingisfun.github.io/maindraw/"
+    },
+    "isBasedOn": {
+      "@type": "DigitalDocument",
+      "name": "USTA junior points table",
+      "url": "https://www.usta.com/content/dam/usta/2026-pdfs/jr-points-table-2026.pdf",
+      "dateModified": "2025-01"
+    },
+    "relatedLink": "https://vibecodingisfun.github.io/maindraw/usta-junior-rankings.html",
+    "author": { "@type": "Person", "name": "BO TAO" }
+  }
+  </script>
 </head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
@@ -196,12 +221,46 @@
     <p class="fine">MainDraw is not affiliated with USTA or Universal Tennis. © 2026 BO TAO.</p>
   </footer>
   <script>
+    function centerLevel(bar, smooth) {
+      if (!window.matchMedia("(max-width: 800px)").matches) return;
+      var buttons = bar.querySelectorAll("button");
+      if (buttons.length !== 7) return;
+      var button = bar.querySelector('[aria-pressed="true"]');
+      if (!button) return;
+      var chip = button.getBoundingClientRect().width;
+      if (!chip) return;
+      var style = getComputedStyle(bar);
+      var pad = parseFloat(style.paddingLeft) || 0;
+      var gap = parseFloat(style.columnGap) || 0;
+      var spacer = Math.max(0, Math.ceil(bar.clientWidth / 2 - chip / 2 - pad - gap));
+      var pads = bar.querySelectorAll(":scope > .level-pad");
+      if (pads.length !== 2) {
+        var lead = document.createElement("span");
+        var tail = document.createElement("span");
+        lead.className = "level-pad";
+        tail.className = "level-pad";
+        lead.setAttribute("aria-hidden", "true");
+        tail.setAttribute("aria-hidden", "true");
+        bar.insertBefore(lead, bar.firstChild);
+        bar.appendChild(tail);
+        pads = [lead, tail];
+      }
+      pads.forEach(function (item) {
+        item.style.flex = "0 0 " + spacer + "px";
+      });
+      var barBox = bar.getBoundingClientRect();
+      var buttonBox = button.getBoundingClientRect();
+      var delta = buttonBox.left + buttonBox.width / 2 - (barBox.left + barBox.width / 2);
+      bar.scrollTo({ left: bar.scrollLeft + delta, behavior: smooth ? "smooth" : "auto" });
+    }
     document.querySelectorAll(".format").forEach(function (item) {
       item.addEventListener("toggle", function () {
         if (!item.open) return;
         document.querySelectorAll(".format").forEach(function (other) {
           if (other !== item) other.open = false;
         });
+        var bar = item.querySelector(".levels");
+        if (bar) requestAnimationFrame(function () { centerLevel(bar, false); });
       });
     });
     document.querySelectorAll(".levels").forEach(function (bar) {
@@ -213,7 +272,11 @@
         bar.querySelectorAll("button").forEach(function (other) {
           other.setAttribute("aria-pressed", other === button ? "true" : "false");
         });
+        centerLevel(bar, true);
       });
+    });
+    document.querySelectorAll(".format[open] .levels").forEach(function (bar) {
+      centerLevel(bar, false);
     });
   </script>
 </body>

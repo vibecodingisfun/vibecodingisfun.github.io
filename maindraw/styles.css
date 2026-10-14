@@ -586,6 +586,7 @@ details p {
   }
   .levels::-webkit-scrollbar { display: none; }
   .levels button { flex: 0 0 auto; }
+  .level-pad { flex: none; }
 }
 
 @media (max-width: 960px) {
