@@ -373,6 +373,97 @@ details p {
   color: color-mix(in srgb, var(--line) 58%, #6f8a78);
 }
 
+.hero.solo { grid-template-columns: minmax(0, 46rem); }
+.hero.solo h1 { font-size: clamp(2.2rem, 5vw, 3.5rem); max-width: 18ch; }
+
+.section-head p {
+  margin: 0.85rem 0 0;
+  color: var(--muted);
+  max-width: 40rem;
+}
+
+.jump {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin: 0 0 0.4rem;
+}
+
+.jump a {
+  text-decoration: none;
+  background: var(--card);
+  border: 1px solid color-mix(in srgb, var(--court) 14%, transparent);
+  border-radius: 999px;
+  padding: 0.35rem 0.75rem;
+  font-size: 0.88rem;
+}
+
+.faq article {
+  border-bottom: 1px solid color-mix(in srgb, var(--court) 16%, transparent);
+  padding: 1.25rem 0 1.35rem;
+  scroll-margin-top: 4.75rem;
+}
+
+.faq article h3 {
+  margin: 0;
+  font-size: 1.35rem;
+  line-height: 1.25;
+}
+
+.faq article p {
+  margin: 0.7rem 0 0;
+  color: var(--muted);
+}
+
+.faq .source { font-size: 0.88rem; }
+
+.table-wrap { overflow-x: auto; }
+
+.compare {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--card);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.compare th,
+.compare td {
+  text-align: left;
+  vertical-align: top;
+  padding: 0.95rem 1rem;
+  border-bottom: 1px solid color-mix(in srgb, var(--court) 12%, transparent);
+}
+
+.compare thead th {
+  font-family: var(--cond);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  color: var(--court);
+  background: color-mix(in srgb, var(--ball) 28%, white);
+}
+
+.compare tbody th {
+  font-family: var(--serif);
+  font-weight: 650;
+  color: var(--ink);
+  width: 11rem;
+}
+
+.refs {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-width: 46rem;
+}
+
+.refs li {
+  padding: 0.6rem 0;
+  border-bottom: 1px solid color-mix(in srgb, var(--court) 16%, transparent);
+}
+
 @media (max-width: 960px) {
   .hero { grid-template-columns: 1fr; padding-bottom: 3.5rem; }
   .hero-stage {
