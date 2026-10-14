@@ -555,7 +555,30 @@ details p {
   .sheet[data-selected="5"] .pts tr:has(td[data-col="5"].na),
   .sheet[data-selected="6"] .pts tr:has(td[data-col="6"].na),
   .sheet[data-selected="7"] .pts tr:has(td[data-col="7"].na) { display: none; }
-  .pts th[scope="row"] { width: auto; }
+
+  .table-wrap { overflow: visible; }
+  .pts th[scope="row"] {
+    width: auto;
+    padding-right: 1rem;
+  }
+  .pts :is(td, th)[data-col] {
+    width: 1%;
+    white-space: nowrap;
+  }
+  .levels {
+    position: sticky;
+    top: 3.7rem;
+    z-index: 5;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    margin: 0.75rem -6vw 0;
+    padding: 0.5rem 6vw 0.7rem;
+    background: var(--paper);
+    box-shadow: 0 12px 0 var(--paper);
+    scrollbar-width: none;
+  }
+  .levels::-webkit-scrollbar { display: none; }
+  .levels button { flex: 0 0 auto; }
 }
 
 @media (max-width: 960px) {
