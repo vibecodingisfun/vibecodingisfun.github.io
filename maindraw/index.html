@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>MainDraw — USTA roster, UTR lookup, and match scorecard</title>
-  <meta name="description" content="MainDraw is an unofficial iOS app for tennis parents and coaches. Look up National Ranking and UTR on a USTA Players list, then score each point and keep notes after the match. 30 days free for new installs.">
+  <meta name="description" content="MainDraw is an unofficial iOS app for tennis parents and coaches. Look up National Ranking and UTR on a Players list, tap a ranking for the matches that count, and score each point with notes after the match. 30 days free for new installs.">
   <meta name="apple-itunes-app" content="app-id=6810411828">
   <link rel="canonical" href="https://vibecodingisfun.github.io/maindraw/">
   <link rel="icon" href="assets/icon.png" type="image/png">
@@ -34,7 +34,7 @@
         "downloadUrl": "https://apps.apple.com/us/app/maindraw/id6810411828",
         "installUrl": "https://apps.apple.com/us/app/maindraw/id6810411828",
         "image": "https://vibecodingisfun.github.io/maindraw/assets/icon.png",
-        "description": "Unofficial iOS tool that looks up National Ranking and UTR on a USTA Players list, shows UTR on the Draw, and records each point of a match with notes, stats, and a point log. Sign in with your own USTA and Universal Tennis accounts. Not affiliated with USTA or Universal Tennis.",
+        "description": "Unofficial iOS tool that looks up National Ranking and UTR on a USTA Players list, opens the matches that count for a ranking, opens a Universal Tennis profile from a UTR number, and records each point of a match with notes, stats, and a point log. Not affiliated with USTA or Universal Tennis.",
         "author": { "@type": "Person", "name": "BO TAO" },
         "offers": {
           "@type": "AggregateOffer",
@@ -68,7 +68,7 @@
             "name": "Do I need USTA and UTR accounts?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Live Look Up uses your own Universal Tennis sign-in. Opening USTA pages and family schedules uses your USTA session. Browsing, bookmarks, Demo Mode, and browsing Scorecard stay available without a MainDraw subscription during the trial. Demo Mode uses an offline sample roster and needs no accounts."
+              "text": "Live Look Up uses your own Universal Tennis sign-in. Opening USTA pages and family schedules uses your USTA session. Browsing, bookmarks, and Demo Mode work without a MainDraw subscription. Demo Mode uses an offline sample roster and needs no accounts."
             }
           },
           {
@@ -76,7 +76,7 @@
             "name": "How does Look Up work?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Open a tournament Players list, choose one event, tap Read, then tap Look Up. MainDraw annotates each player with National Ranking, UTR, and a match-confidence score in sortable columns. That event stays with the tournament for 7 days, and the Draw shows Singles or Doubles UTR beside each saved player. Session cookies stay on your device."
+              "text": "Open a tournament Players list, choose one event, tap Read, then tap Look Up. MainDraw annotates each player with National Ranking, UTR, and a match-confidence score in sortable columns. Tap the National Ranking number to see the singles and doubles that count, up to six of each. Tap a UTR number to open that player's Universal Tennis profile. A dash is not a link."
             }
           },
           {
@@ -113,10 +113,34 @@
           },
           {
             "@type": "Question",
+            "name": "What do I see when I tap a National Ranking number?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "The list shows the singles and doubles that count for that rank, up to six of each. The last row of each group is the lowest score that counts. Tap a level name to open that tournament. Sample numbers in Demo Mode are not links."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What do I see when I tap a UTR number?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "That player's profile opens on Universal Tennis. In a doubles row, each number opens that player. A dash is not a link, and the sample numbers in Demo Mode are not links either."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What is the notice on Home?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Under MainDraw, System Notice reads Hope you enjoy MainDraw! unless a newer note is posted. A web address in that note opens when you tap it."
+            }
+          },
+          {
+            "@type": "Question",
             "name": "How much does MainDraw cost?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "MainDraw is free to download. New installs include 30 days of free Look Up and Scorecard. After the trial, Look Up and Scorecard need a subscription through Apple at $0.99 per month or $9.99 per year. Browsing USTA and UTR pages, bookmarks, and Demo Mode stay available without a subscription."
+              "text": "MainDraw is free to download. New installs include 30 days of free Look Up and Scorecard. After the trial, Look Up and Scorecard are $0.99 per month or $9.99 per year through Apple. Browsing USTA and UTR pages, bookmarks, and Demo Mode stay available without a subscription."
             }
           }
         ]
@@ -136,7 +160,7 @@
     <nav>
       <a href="#how">How it works</a>
       <a href="#score">Scorecard</a>
-      <a href="#also">Also</a>
+      <a href="#ranks">Numbers</a>
       <a href="#tabs">Tabs</a>
       <a href="#faq">FAQ</a>
       <a class="nav-cta" href="https://apps.apple.com/us/app/maindraw/id6810411828">App Store</a>
@@ -199,7 +223,7 @@
         <li>
           <span class="seed">4</span>
           <h3>Look Up</h3>
-          <p>National Ranking, UTR, and match confidence land in columns you can sort. Sign in to Universal Tennis once on Sites → UTR. Choose one event first—All events is not a list you can look up.</p>
+          <p>National Ranking, UTR, and match confidence land in columns you can sort. Tap the ranking number for the matches that count, or a UTR number for that player's profile. Sign in to Universal Tennis once on Sites → UTR. Choose one event first—All events is not a list you can look up.</p>
         </li>
       </ol>
     </section>
@@ -219,7 +243,7 @@
           <li>
             <span class="seed">2</span>
             <h3>Tap the winner</h3>
-            <p>Tap a name for each point. Fault and Ace sit under the score. Detailed mode asks how the point ended: stroke, direction, depth, and the miss.</p>
+            <p>Tap a name for each point. Fault and Ace sit under the score. Detailed mode asks how the point ended: stroke, direction, depth, and the error.</p>
           </li>
           <li>
             <span class="seed">3</span>
@@ -243,7 +267,28 @@
       </div>
     </section>
 
-    <section class="band" id="also">
+    <section class="band" id="ranks">
+      <header class="section-head">
+        <p class="eyebrow">On the list</p>
+        <h2>Tap the number</h2>
+      </header>
+      <ul class="tabs">
+        <li>
+          <h3>Matches that count</h3>
+          <p>Tap the National Ranking number on a player’s row. The list shows the singles and doubles that count for that rank, up to six of each. The last row of each group is the lowest score that counts. Tap a level name to open that tournament.</p>
+        </li>
+        <li>
+          <h3>UTR profile</h3>
+          <p>Tap a UTR number on the same row to open that player’s profile on Universal Tennis. In a doubles row, each number opens that player. A dash is not a link.</p>
+        </li>
+        <li>
+          <h3>System Notice</h3>
+          <p>Home shows a notice under MainDraw. It reads “Hope you enjoy MainDraw!” unless a newer note is posted. A web address in that note opens when you tap it.</p>
+        </li>
+      </ul>
+    </section>
+
+    <section class="band alt" id="also">
       <header class="section-head">
         <p class="eyebrow">Also in the app</p>
         <h2>Filters, saved lists, and the draw</h2>
@@ -268,7 +313,7 @@
       </ul>
     </section>
 
-    <section class="band alt" id="tabs">
+    <section class="band" id="tabs">
       <header class="section-head">
         <p class="eyebrow">On the tab bar</p>
         <h2>Four places you actually live</h2>
@@ -276,7 +321,7 @@
       <ul class="tabs">
         <li>
           <h3>Home</h3>
-          <p>How to Use, Try Demo, plans, privacy, and support. The rest of the app stays one tap away.</p>
+          <p>How to Use, the System Notice, Try Demo, plans, privacy, and support. The rest of the app stays one tap away.</p>
         </li>
         <li>
           <h3>Sites</h3>
@@ -293,7 +338,7 @@
       </ul>
     </section>
 
-    <section class="band" id="try">
+    <section class="band alt" id="try">
       <div class="split">
         <div>
           <p class="eyebrow">No accounts required</p>
@@ -301,8 +346,7 @@
           <p>
             Demo Mode uses an offline sample roster. Tap Read, then Look Up,
             and see the annotated columns without USTA or Universal Tennis
-            sign-in. Scorecard stays on its own tab when you want to practice
-            marking a match.
+            sign-in. The sample ranking and UTR numbers are not links.
           </p>
         </div>
         <dl class="price">
@@ -326,10 +370,11 @@
       </div>
     </section>
 
-    <section class="band alt" id="faq">
+    <section class="band" id="faq">
       <header class="section-head">
         <p class="eyebrow">Questions</p>
         <h2>What parents usually ask</h2>
+        <p>For how USTA points, the best 6, bonus points, and seeding work, see <a href="usta-junior-rankings.html">how junior national rankings are calculated</a>.</p>
       </header>
       <div class="faq">
         <details open>
@@ -351,6 +396,18 @@
         <details>
           <summary>Can I save a tournament filter?</summary>
           <p>Yes. On the USTA tab, open Search, set location, dates, and the other filters, then tap Searches beside Results and Save Current Filters. Give it a name. Opening that name later fills Sort &amp; Filter again. Use Manage Saved Searches to rename, reorder, or delete one.</p>
+        </details>
+        <details>
+          <summary>What do I see when I tap a National Ranking number?</summary>
+          <p>The singles and doubles that count for that rank, up to six of each. The last row of each group is the lowest score that counts. Tap a level name to open that tournament. Sample numbers in Demo Mode are not links.</p>
+        </details>
+        <details>
+          <summary>What do I see when I tap a UTR number?</summary>
+          <p>That player’s profile opens on Universal Tennis. In a doubles row, each number opens that player. A dash is not a link, and the sample numbers in Demo Mode are not links either.</p>
+        </details>
+        <details>
+          <summary>What is the notice on Home?</summary>
+          <p>Under MainDraw, System Notice reads “Hope you enjoy MainDraw!” unless a newer note is posted. A web address in that note opens when you tap it.</p>
         </details>
         <details>
           <summary>Does the Draw show UTR?</summary>
@@ -382,6 +439,7 @@
     </div>
     <ul>
       <li><a href="https://apps.apple.com/us/app/maindraw/id6810411828">App Store</a></li>
+      <li><a href="usta-junior-rankings.html">Junior rankings</a></li>
       <li><a href="https://vibecodingisfun.github.io/maindraw_privacy/">Privacy Policy</a></li>
       <li><a href="https://www.apple.com/legal/internet-services/itunes/dev/stdeula/">Terms of Use</a></li>
       <li><a href="mailto:taobo2000@gmail.com">Support</a></li>
