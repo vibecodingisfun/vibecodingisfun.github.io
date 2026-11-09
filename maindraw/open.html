@@ -59,17 +59,42 @@
       link.textContent = tournament;
     }
 
-    var params = new URLSearchParams(window.location.search);
-    var tournament = overviewURL(decodedToken(params.get("u")));
-    var agent = navigator.userAgent || "";
-    if (!tournament) {
-      showStore(null);
-    } else if (agent.indexOf("Android") !== -1) {
-      window.location.replace(androidGoesToPlay ? playStore : tournament);
-    } else if (agent.indexOf("iPhone") !== -1 || agent.indexOf("iPad") !== -1) {
-      window.location.replace(appStore);
+    function tokenFromPage() {
+      var params = new URLSearchParams(window.location.search);
+      var query = params.get("u");
+      if (query) return query;
+      var parts = window.location.pathname.split("/");
+      if (parts.length === 4 && parts[1] === "maindraw" && parts[2] === "open") return parts[3];
+      return null;
+    }
+
+    var path = window.location.pathname;
+    var isOpen = path === "/maindraw/open.html" || /^\/maindraw\/open\/[^/]+$/.test(path);
+    if (!isOpen) {
+      document.body.textContent = "Page not found";
     } else {
-      showStore(tournament);
+      var tournament = overviewURL(decodedToken(tokenFromPage()));
+      var agent = navigator.userAgent || "";
+      if (!tournament) {
+        showStore(null);
+      } else if (agent.indexOf("Android") !== -1) {
+        window.location.replace(androidGoesToPlay ? playStore : tournament);
+      } else if (agent.indexOf("iPhone") !== -1 || agent.indexOf("iPad") !== -1) {
+        var token = tokenFromPage();
+        var left = false;
+        function cancelStore() { left = true; }
+        window.addEventListener("pagehide", cancelStore);
+        window.addEventListener("blur", cancelStore);
+        document.addEventListener("visibilitychange", function () {
+          if (document.hidden) cancelStore();
+        });
+        setTimeout(function () {
+          if (!left) window.location.replace(appStore);
+        }, 1200);
+        window.location.href = "maindraw://open/" + token;
+      } else {
+        showStore(tournament);
+      }
     }
   </script>
 </body>

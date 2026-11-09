@@ -5,6 +5,9 @@
         "appIDs": ["5D79T6R848.com.botao.MainDraw"],
         "components": [
           {
+            "/": "/maindraw/open/*"
+          },
+          {
             "/": "/maindraw/open.html",
             "?": { "u": "?*" }
           }
