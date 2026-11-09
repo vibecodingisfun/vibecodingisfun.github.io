@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Open this tournament in MainDraw</title>
+  <meta property="og:title" content="Open this tournament in MainDraw">
+  <meta property="og:type" content="website">
+  <link rel="canonical" href="https://vibecodingisfun.github.io/maindraw/open.html">
+</head>
+<body>
+  <p id="fallback" hidden>
+    <a id="tournament"></a>
+    <a id="store" href="https://apps.apple.com/us/app/maindraw/id6810411828">App Store</a>
+  </p>
+  <script>
+    var androidGoesToPlay = false;
+    var appStore = "https://apps.apple.com/us/app/maindraw/id6810411828";
+    var playStore = "https://play.google.com/store/apps/details?id=com.botao.maindraw";
+
+    function decodedToken(token) {
+      if (!token || !/^[A-Za-z0-9_-]+$/.test(token)) return null;
+      var base64 = token.replace(/-/g, "+").replace(/_/g, "/");
+      var remainder = base64.length % 4;
+      if (remainder > 0) base64 += "====".slice(remainder);
+      try { return atob(base64); } catch (error) { return null; }
+    }
+
+    function overviewURL(text) {
+      var url;
+      try { url = new URL(text); } catch (error) { return null; }
+      if (url.protocol !== "https:") return null;
+      var host = url.hostname.toLowerCase();
+      if (host !== "playtennis.usta.com" && host !== "www.playtennis.usta.com") return null;
+      if (url.username || url.port) return null;
+      var segments = url.pathname.split("/").filter(function (part) { return part.length > 0; });
+      var tournaments = -1;
+      for (var index = 0; index < segments.length; index += 1) {
+        if (segments[index].toLowerCase() === "tournaments") tournaments = index;
+      }
+      if (tournaments < 1 || tournaments + 2 !== segments.length - 1) return null;
+      if (segments[tournaments + 1].toLowerCase() !== "overview") return null;
+      if (!segments[tournaments + 2]) return null;
+      return "https://playtennis.usta.com/"
+        + segments.slice(0, tournaments).join("/")
+        + "/Tournaments/Overview/"
+        + segments[tournaments + 2];
+    }
+
+    function showStore(tournament) {
+      var fallback = document.getElementById("fallback");
+      var link = document.getElementById("tournament");
+      fallback.hidden = false;
+      if (!tournament) {
+        link.hidden = true;
+        return;
+      }
+      link.href = tournament;
+      link.textContent = tournament;
+    }
+
+    var params = new URLSearchParams(window.location.search);
+    var tournament = overviewURL(decodedToken(params.get("u")));
+    var agent = navigator.userAgent || "";
+    if (!tournament) {
+      showStore(null);
+    } else if (agent.indexOf("Android") !== -1) {
+      window.location.replace(androidGoesToPlay ? playStore : tournament);
+    } else if (agent.indexOf("iPhone") !== -1 || agent.indexOf("iPad") !== -1) {
+      window.location.replace(appStore);
+    } else {
+      showStore(tournament);
+    }
+  </script>
+</body>
+</html>
