@@ -81,16 +81,7 @@
         window.location.replace(androidGoesToPlay ? playStore : tournament);
       } else if (agent.indexOf("iPhone") !== -1 || agent.indexOf("iPad") !== -1) {
         var token = tokenFromPage();
-        var left = false;
-        function cancelStore() { left = true; }
-        window.addEventListener("pagehide", cancelStore);
-        window.addEventListener("blur", cancelStore);
-        document.addEventListener("visibilitychange", function () {
-          if (document.hidden) cancelStore();
-        });
-        setTimeout(function () {
-          if (!left) window.location.replace(appStore);
-        }, 1200);
+        showStore(null);
         window.location.href = "maindraw://open/" + token;
       } else {
         showStore(tournament);
