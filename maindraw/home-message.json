@@ -1,6 +1,7 @@
 {
-  "notice": "Now you can hatch a super cute ***pet*** in the MainDraw!!!",
-  "message": "Now you can hatch a super cute ***pet*** in the MainDraw!!!\nApp Store: https://apps.apple.com/app/maindraw/id6810411828\nGoogle Play: https://play.google.com/store/apps/details?id=com.botao.maindraw",
-  "iosMessage": "Now you can hatch a super cute ***pet*** in the MainDraw!!!\nApp Store: https://apps.apple.com/app/maindraw/id6810411828",
-  "androidMessage": "Now you can hatch a super cute ***pet*** in the MainDraw!!!\nGoogle Play: https://play.google.com/store/apps/details?id=com.botao.maindraw"
+  "notice": null,
+  "message": null,
+  "iosMessage": null,
+  "androidMessage": null,
+  "card": null
 }
