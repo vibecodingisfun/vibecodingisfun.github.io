@@ -149,7 +149,7 @@
     <div>
       <div class="mark">MainDraw desk</div>
       <h1>给 Home 写一句话</h1>
-      <p>这句话会出现在 App 的 Home 标题下面。留空再发布，就是把它清掉。日期开关不在这里改。</p>
+      <p>这句话会出现在 App 的 Home 标题下面。只写通知本身，App Store 和 Google Play 的链接发布时自动加上。留空再发布，就是把它清掉。日期开关不在这里改。</p>
     </div>
   </header>
   <main>
@@ -195,11 +195,27 @@
     const preview = document.querySelector("#preview");
     const previewEmpty = document.querySelector("#preview-empty");
     const tokenBox = document.querySelector("#token");
+    const appStoreUrl = "https://apps.apple.com/app/maindraw/id6810411828";
+    const playUrl = "https://play.google.com/store/apps/details?id=com.botao.maindraw";
+
+    // Only the notice is typed here; the store links are added on publish.
+    // `message` (read by every build) carries both links; newer builds read their own
+    // `iosMessage` / `androidMessage` with one link. `notice` keeps the typed text for this page.
+    function buildFile(text) {
+      const notice = text.trim();
+      if (!notice) return { notice: null, message: null, iosMessage: null, androidMessage: null };
+      return {
+        notice,
+        message: notice + "\nApp Store: " + appStoreUrl + "\nGoogle Play: " + playUrl,
+        iosMessage: notice + "\nApp Store: " + appStoreUrl,
+        androidMessage: notice + "\nGoogle Play: " + playUrl
+      };
+    }
 
     function showPreview(text) {
       const trimmed = text.trim();
       preview.hidden = !trimmed;
-      preview.textContent = trimmed;
+      preview.textContent = trimmed ? buildFile(trimmed).message : "";
       previewEmpty.hidden = !!trimmed;
     }
 
@@ -224,7 +240,8 @@
       ]);
       const messageFile = await messageRes.json();
       const switchFile = await switchRes.json();
-      messageBox.value = typeof messageFile.message === "string" ? messageFile.message : "";
+      messageBox.value = typeof messageFile.notice === "string" ? messageFile.notice
+        : (typeof messageFile.message === "string" ? messageFile.message : "");
       showPreview(messageBox.value);
       const when = switchFile.premiumRequiredAt;
       document.querySelector("#switch-value").textContent = when ? when : "还没定（null）";
@@ -250,7 +267,7 @@
         });
         const meta = await current.json();
         if (!current.ok) throw new Error(meta.message || "读不到文件");
-        const payload = { message: text.trim() ? text.trim() : null };
+        const payload = buildFile(text);
         const body = JSON.stringify(payload, null, 2) + "\n";
         const content = btoa(unescape(encodeURIComponent(body)));
         const saved = await fetch("https://api.github.com/repos/" + repo + "/contents/" + path, {
