@@ -212,15 +212,10 @@
         <input id="image-alt" type="text" placeholder="例如：Fuzz hatching from an egg">
       </div>
 
-      <div class="field grid2">
-        <div>
-          <label for="button-label">按钮文字（可选）</label>
-          <input id="button-label" type="text" maxlength="40" placeholder="Get MainDraw">
-        </div>
-        <div>
-          <label for="button-link">按钮链接</label>
-          <input id="button-link" type="text" value="store">
-        </div>
+      <div class="field">
+        <label for="button-label">按钮文字（可选）</label>
+        <input id="button-label" type="text" maxlength="40" placeholder="Get MainDraw">
+        <p class="hint">按钮在 iPhone 上打开 App Store，在 Android 上打开 Google Play。留空就没有按钮。</p>
       </div>
 
       <ul class="problems" id="problems" hidden></ul>
@@ -284,7 +279,7 @@
         notice: messageBox.value,
         accent: state.accent,
         image: hasImage ? { url: state.imageUrl || pendingImageUrl(), alt: $("#image-alt").value } : null,
-        button: label ? { label, link: $("#button-link").value.trim() } : null
+        button: label ? { label, link: "store" } : null
       };
     }
 
@@ -338,7 +333,7 @@
     }
 
     messageBox.addEventListener("input", render);
-    ["#image-alt", "#button-label", "#button-link"].forEach((q) => $(q).addEventListener("input", render));
+    ["#image-alt", "#button-label"].forEach((q) => $(q).addEventListener("input", render));
     $("#swatches").addEventListener("click", (e) => { if (e.target.dataset.accent) { state.accent = e.target.dataset.accent; render(); } });
     $("#toggles").addEventListener("click", (e) => {
       if (e.target.dataset.platform) state.platform = e.target.dataset.platform;
@@ -402,10 +397,7 @@
           probe.onload = () => { state.imageShape = R.shape(probe.naturalWidth, probe.naturalHeight); render(); };
           probe.src = card.image.url;
         }
-        if (card.button) {
-          $("#button-label").value = card.button.label || "";
-          $("#button-link").value = card.button.link || "store";
-        }
+        if (card.button) $("#button-label").value = card.button.label || "";
       }
       const when = switchFile.tiersStartAt;
       $("#switch-value").textContent = when ? when : "还没定（null）";
