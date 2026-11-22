@@ -139,8 +139,42 @@
       white-space: pre-wrap;
     }
     .screen .empty { margin-top: 0.8rem; color: var(--muted); font-size: 0.9rem; }
+    input[type="text"], select {
+      width: 100%;
+      border: 1px solid rgba(22, 51, 38, 0.2);
+      border-radius: 0.8rem;
+      padding: 0.6rem 0.8rem;
+      font: inherit;
+      color: inherit;
+      background: #fff;
+    }
+    .hint { color: var(--muted); font-size: 0.86rem; margin: 0.35rem 0 0; }
+    .field { margin-top: 1rem; }
+    .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0.7rem; }
+    .swatches { display: flex; gap: 0.5rem; }
+    .swatch {
+      width: 2.2rem; height: 2.2rem; border-radius: 50%; border: 3px solid transparent; padding: 0;
+    }
+    .swatch[aria-pressed="true"] { border-color: var(--ink); }
+    .problems { color: var(--danger); font-size: 0.9rem; margin: 0.6rem 0 0; padding-left: 1.1rem; }
+    .toggles { display: flex; gap: 0.4rem; justify-content: center; margin: 0.4rem 0 0.6rem; }
+    .toggles button { padding: 0.35rem 0.8rem; background: transparent; border: 1px solid rgba(22, 51, 38, 0.25); font-size: 0.85rem; }
+    .toggles button[aria-pressed="true"] { background: var(--court); color: var(--line); }
+    .screen.dark { background: #000; color: #f2f2f2; }
+    .screen.dark .tag, .screen.dark .empty { color: #9a9a9a; }
+    .card { position: relative; margin-top: 0.8rem; border-radius: 0.9rem; padding: 0.8rem 0.8rem 0.9rem; }
+    .card .img { display: block; margin: 0 auto 0.6rem; border-radius: 0.6rem; object-fit: cover; }
+    .card .img.wide { width: 100%; aspect-ratio: 2 / 1; }
+    .card .img.square { width: 60%; aspect-ratio: 1 / 1; }
+    .card .text { font-size: 0.95rem; padding-right: 1.8rem; white-space: pre-wrap; }
+    .card .text a { text-decoration: underline; }
+    .card .btn { display: inline-block; margin-top: 0.6rem; border-radius: 999px; padding: 0.45rem 0.9rem; font-weight: 600; font-size: 0.9rem; }
+    .card .x { position: absolute; top: 0.5rem; right: 0.5rem; width: 1.4rem; height: 1.4rem; border-radius: 50%; display: grid; place-items: center; font-size: 0.75rem; background: #fff; color: #111; border: 1px solid #ccc; }
+    .screen.dark .card .x { background: #1c1c1e; color: #eee; border-color: #444; }
+    .old { margin-top: 0.8rem; font-size: 0.78rem; color: var(--muted); white-space: pre-wrap; }
     @media (max-width: 800px) {
       main { grid-template-columns: 1fr; }
+      .grid2 { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -149,21 +183,55 @@
     <div>
       <div class="mark">MainDraw desk</div>
       <h1>给 Home 写一句话</h1>
-      <p>这句话会出现在 App 的 Home 标题下面。只写通知本身，App Store 和 Google Play 的链接发布时自动加上。留空再发布，就是把它清掉。日期开关不在这里改。</p>
+      <p>这句话会出现在 App 的 Home 标题下面。只写通知本身：<code>**加粗**</code>，<code>[Get MainDraw](store)</code> 会在 iPhone 打开 App Store、在 Android 打开 Google Play。旧版本看到的纯文字和两个商店链接，发布时自动生成。留空再发布，就是把它清掉。</p>
     </div>
   </header>
   <main>
     <section>
-      <label for="message">现在要显示的话</label>
-      <textarea id="message" placeholder="例如：National Ranking stays included until a date is announced."></textarea>
+      <label for="message">通知</label>
+      <textarea id="message" placeholder="例如：Now you can hatch a super cute **pet** in MainDraw! [Get MainDraw](store)"></textarea>
+      <p class="hint">最多 280 个字（不算 ** 和链接符号）。链接只能用 <code>store</code>、本站、App Store 或 Google Play。</p>
+
+      <div class="field">
+        <label>颜色</label>
+        <div class="swatches" id="swatches">
+          <button type="button" class="swatch" data-accent="green" aria-label="绿色" style="background:#146140"></button>
+          <button type="button" class="swatch" data-accent="orange" aria-label="橙色" style="background:#9e4500"></button>
+          <button type="button" class="swatch" data-accent="purple" aria-label="紫色" style="background:#6638a8"></button>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="image-file">图片（可选）</label>
+        <input id="image-file" type="file" accept="image/jpeg,image/png,image/webp">
+        <p class="hint">2:1 宽图或 1:1 方图，最大 400 KB、2400 像素。<span id="image-current"></span></p>
+        <div class="row" style="margin-top:0.4rem">
+          <button class="quiet" id="image-remove" type="button" hidden>去掉图片</button>
+        </div>
+        <label for="image-alt" style="margin-top:0.5rem">图片说明（读屏用）</label>
+        <input id="image-alt" type="text" placeholder="例如：Fuzz hatching from an egg">
+      </div>
+
+      <div class="field grid2">
+        <div>
+          <label for="button-label">按钮文字（可选）</label>
+          <input id="button-label" type="text" maxlength="40" placeholder="Get MainDraw">
+        </div>
+        <div>
+          <label for="button-link">按钮链接</label>
+          <input id="button-link" type="text" value="store">
+        </div>
+      </div>
+
+      <ul class="problems" id="problems" hidden></ul>
       <div class="row">
         <button class="primary" id="publish" type="button">发布</button>
         <button class="quiet" id="clear" type="button">清空</button>
         <span class="status" id="status">正在读取网站上的文件…</span>
       </div>
       <div class="switch">
-        日期开关现在是 <strong id="switch-value">…</strong>。
-        要改日期，把 <code>premium-switch.json</code> 写成 <code>2026/02/15</code> 这种日子。当天美东标准时间晚上 9 点生效，而且只改一次。Premium 审核通过之前不要写入日期。
+        分档日期 <code>tiersStartAt</code> 现在是 <strong id="switch-value">…</strong>；审核用的 <code>premiumForSale</code> 是 <strong id="for-sale-value">…</strong>。
+        要设日期，把 <code>premium-switch.json</code> 的 <code>tiersStartAt</code> 写成 <code>2027/02/01</code> 这种日子，提前几周写；当天美东标准时间晚上 9 点生效。写回 <code>null</code> 就关掉分档。<code>premiumRequiredAt</code> 是旧版本读的，永远保持 <code>null</code>。发布顺序见 <code>docs/superpowers/plans/2026-11-21-fuzz-premium.md</code>。
       </div>
       <details>
         <summary>发布用的 GitHub token</summary>
@@ -176,53 +244,135 @@
     </section>
     <aside class="preview">
       <div class="mark">Home 上的样子</div>
+      <div class="toggles" id="toggles">
+        <button type="button" data-platform="ios" aria-pressed="true">iPhone</button>
+        <button type="button" data-platform="android" aria-pressed="false">Android</button>
+        <button type="button" data-mode="light" aria-pressed="true">浅色</button>
+        <button type="button" data-mode="dark" aria-pressed="false">深色</button>
+      </div>
       <div class="phone">
-        <div class="screen">
+        <div class="screen" id="screen">
           <div class="app">MainDraw</div>
           <div class="tag">Read a USTA roster and look up National Ranking and UTR</div>
-          <div class="note" id="preview" hidden></div>
+          <div id="preview"></div>
           <div class="empty" id="preview-empty">没有通知。标题下面是空的。</div>
         </div>
       </div>
+      <div class="old" id="old"></div>
     </aside>
   </main>
+  <script src="notice-rules.js"></script>
   <script>
+    const R = window.NoticeRules;
     const repo = "vibecodingisfun/vibecodingisfun.github.io";
     const path = "maindraw/home-message.json";
+    const siteBase = "https://vibecodingisfun.github.io/";
     const tokenKey = "maindrawDeskToken";
-    const messageBox = document.querySelector("#message");
-    const status = document.querySelector("#status");
-    const preview = document.querySelector("#preview");
-    const previewEmpty = document.querySelector("#preview-empty");
-    const tokenBox = document.querySelector("#token");
-    const appStoreUrl = "https://apps.apple.com/app/maindraw/id6810411828";
-    const playUrl = "https://play.google.com/store/apps/details?id=com.botao.maindraw";
+    const $ = (q) => document.querySelector(q);
+    const messageBox = $("#message");
+    const status = $("#status");
+    const tokenBox = $("#token");
+    const state = { accent: "green", platform: "ios", mode: "light", imageUrl: null, imageFile: null, imagePreview: null, imageShape: null };
 
-    // Only the notice is typed here; the store links are added on publish.
-    // `message` (read by every build) carries both links; newer builds read their own
-    // `iosMessage` / `androidMessage` with one link. `notice` keeps the typed text for this page.
-    function buildFile(text) {
-      const notice = text.trim();
-      if (!notice) return { notice: null, message: null, iosMessage: null, androidMessage: null };
+    function rgb(c) { return "rgb(" + c.map((v) => Math.round(v * 255)).join(",") + ")"; }
+    function escapeHtml(t) { return t.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c])); }
+
+    function currentForm() {
+      const label = $("#button-label").value.trim();
+      const hasImage = !!(state.imageUrl || state.imageFile);
       return {
-        notice,
-        message: notice + "\nApp Store: " + appStoreUrl + "\nGoogle Play: " + playUrl,
-        iosMessage: notice + "\nApp Store: " + appStoreUrl,
-        androidMessage: notice + "\nGoogle Play: " + playUrl
+        notice: messageBox.value,
+        accent: state.accent,
+        image: hasImage ? { url: state.imageUrl || pendingImageUrl(), alt: $("#image-alt").value } : null,
+        button: label ? { label, link: $("#button-link").value.trim() } : null
       };
     }
 
-    function showPreview(text) {
-      const trimmed = text.trim();
-      preview.hidden = !trimmed;
-      preview.textContent = trimmed ? buildFile(trimmed).message : "";
-      previewEmpty.hidden = !!trimmed;
+    function pendingImageUrl() {
+      if (!state.imageFile) return null;
+      const ext = { "image/jpeg": "jpg", "image/png": "png", "image/webp": "webp" }[state.imageFile.type] || "jpg";
+      const slug = state.imageFile.name.replace(/\.[^.]+$/, "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 40) || "image";
+      const day = new Date().toISOString().slice(0, 10);
+      return siteBase + "maindraw/notice/" + day + "-" + slug + "." + ext;
     }
 
-    messageBox.addEventListener("input", () => showPreview(messageBox.value));
+    function render() {
+      const form = currentForm();
+      const notice = form.notice.trim();
+      const dark = state.mode === "dark";
+      $("#screen").classList.toggle("dark", dark);
+      const accent = R.accents[state.accent][dark ? "dark" : "light"];
+      const preview = $("#preview");
+      $("#preview-empty").hidden = !!notice;
+      if (!notice) {
+        preview.innerHTML = "";
+        $("#old").textContent = "";
+      } else {
+        const tint = accent.map((v) => v * 0.08 + (dark ? 0.11 : 1) * 0.92);
+        const textHtml = R.parse(notice).map((s) => {
+          let html = escapeHtml(s.text);
+          if (s.bold) html = "<strong>" + html + "</strong>";
+          const url = s.link !== null ? R.resolveLink(s.link, state.platform) : null;
+          return url ? '<a href="' + escapeHtml(url) + '" target="_blank" rel="noopener" style="color:' + rgb(accent) + '">' + html + "</a>" : html;
+        }).join("");
+        const imageSrc = state.imagePreview || state.imageUrl;
+        const imageHtml = imageSrc && state.imageShape
+          ? '<img class="img ' + state.imageShape + '" src="' + escapeHtml(imageSrc) + '" alt="' + escapeHtml(form.image ? form.image.alt : "") + '">' : "";
+        const buttonText = dark ? "#121212" : "#fff";
+        const buttonHtml = form.button ? '<span class="btn" style="background:' + rgb(accent) + ";color:" + buttonText + '">' + escapeHtml(form.button.label) + "</span>" : "";
+        preview.innerHTML = '<div class="card" style="background:' + rgb(tint) + '">' + imageHtml +
+          '<div class="text"><span style="color:' + rgb(accent) + '">ⓘ</span> ' + textHtml + "</div>" + buttonHtml + '<span class="x">✕</span></div>';
+        $("#old").textContent = "2026-11-21 之前的旧版本看到：\n" + R.plainText(notice, "message");
+      }
+      const list = notice ? R.problems(form) : [];
+      const problems = $("#problems");
+      problems.hidden = list.length === 0;
+      problems.innerHTML = list.map((p) => "<li>" + escapeHtml(p) + "</li>").join("");
+      $("#publish").disabled = list.length > 0;
+      $("#image-remove").hidden = !(state.imageUrl || state.imageFile);
+      $("#image-current").textContent = state.imageUrl ? " 现在的图片：" + state.imageUrl.replace(siteBase, "") : "";
+      document.querySelectorAll(".swatch").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.accent === state.accent)));
+      document.querySelectorAll("#toggles button").forEach((b) => {
+        b.setAttribute("aria-pressed", String(b.dataset.platform === state.platform || b.dataset.mode === state.mode));
+      });
+    }
+
+    messageBox.addEventListener("input", render);
+    ["#image-alt", "#button-label", "#button-link"].forEach((q) => $(q).addEventListener("input", render));
+    $("#swatches").addEventListener("click", (e) => { if (e.target.dataset.accent) { state.accent = e.target.dataset.accent; render(); } });
+    $("#toggles").addEventListener("click", (e) => {
+      if (e.target.dataset.platform) state.platform = e.target.dataset.platform;
+      if (e.target.dataset.mode) state.mode = e.target.dataset.mode;
+      render();
+    });
+    $("#image-remove").addEventListener("click", () => {
+      state.imageUrl = null; state.imageFile = null; state.imagePreview = null; state.imageShape = null;
+      $("#image-file").value = "";
+      render();
+    });
+
+    $("#image-file").addEventListener("change", async () => {
+      const file = $("#image-file").files[0];
+      if (!file) return;
+      const fail = (why) => { status.textContent = "这张图片不能用：" + why; $("#image-file").value = ""; };
+      if (!["image/jpeg", "image/png", "image/webp"].includes(file.type)) return fail("只能用 JPEG、PNG 或 WebP。");
+      if (file.size > R.maxImageBytes) return fail("超过 400 KB。");
+      const url = URL.createObjectURL(file);
+      const img = new Image();
+      img.onload = () => {
+        const shape = R.shape(img.naturalWidth, img.naturalHeight);
+        if (img.naturalWidth > R.maxImagePixels || img.naturalHeight > R.maxImagePixels) return fail("超过 2400 像素。");
+        if (!shape) return fail("比例要是 2:1 或 1:1。");
+        state.imageFile = file; state.imagePreview = url; state.imageShape = shape; state.imageUrl = null;
+        status.textContent = "图片可以用（" + (shape === "wide" ? "宽图" : "方图") + "），发布时上传。";
+        render();
+      };
+      img.onerror = () => fail("读不出来。");
+      img.src = url;
+    });
 
     tokenBox.value = localStorage.getItem(tokenKey) || "";
-    document.querySelector("#save-token").addEventListener("click", () => {
+    $("#save-token").addEventListener("click", () => {
       const token = tokenBox.value.trim();
       if (!token) {
         localStorage.removeItem(tokenKey);
@@ -238,72 +388,127 @@
         fetch("home-message.json?ts=" + Date.now(), { cache: "no-store" }),
         fetch("premium-switch.json?ts=" + Date.now(), { cache: "no-store" })
       ]);
-      const messageFile = await messageRes.json();
+      const file = await messageRes.json();
       const switchFile = await switchRes.json();
-      messageBox.value = typeof messageFile.notice === "string" ? messageFile.notice
-        : (typeof messageFile.message === "string" ? messageFile.message : "");
-      showPreview(messageBox.value);
-      const when = switchFile.premiumRequiredAt;
-      document.querySelector("#switch-value").textContent = when ? when : "还没定（null）";
+      messageBox.value = typeof file.notice === "string" ? file.notice
+        : (typeof file.message === "string" ? file.message : "");
+      const card = file.card && typeof file.card === "object" ? file.card : null;
+      if (card) {
+        if (R.accents[card.accent]) state.accent = card.accent;
+        if (card.image && R.allowedImageUrl(card.image.url || "")) {
+          state.imageUrl = card.image.url;
+          $("#image-alt").value = card.image.alt || "";
+          const probe = new Image();
+          probe.onload = () => { state.imageShape = R.shape(probe.naturalWidth, probe.naturalHeight); render(); };
+          probe.src = card.image.url;
+        }
+        if (card.button) {
+          $("#button-label").value = card.button.label || "";
+          $("#button-link").value = card.button.link || "store";
+        }
+      }
+      const when = switchFile.tiersStartAt;
+      $("#switch-value").textContent = when ? when : "还没定（null）";
+      $("#for-sale-value").textContent = switchFile.premiumForSale === true ? "开" : "关";
       status.textContent = messageBox.value ? "网站上现在有一条通知。" : "网站上现在没有通知。";
+      render();
     }
 
-    async function writeMessage(text) {
+    function gh(token, filePath, options) {
+      return fetch("https://api.github.com/repos/" + repo + "/contents/" + filePath, {
+        ...options,
+        headers: { Authorization: "Bearer " + token, Accept: "application/vnd.github+json", "Content-Type": "application/json" }
+      });
+    }
+
+    function toBase64Text(text) { return btoa(unescape(encodeURIComponent(text))); }
+    async function toBase64File(file) {
+      const bytes = new Uint8Array(await file.arrayBuffer());
+      let binary = "";
+      for (let i = 0; i < bytes.length; i += 0x8000) binary += String.fromCharCode(...bytes.subarray(i, i + 0x8000));
+      return btoa(binary);
+    }
+
+    async function waitForPublic(url) {
+      for (let i = 0; i < 40; i += 1) {
+        try {
+          const res = await fetch(url + "?ts=" + Date.now(), { cache: "no-store" });
+          if (res.ok) return true;
+        } catch (e) { /* not there yet */ }
+        status.textContent = "图片已上传，等网站上能读到（" + (i + 1) * 5 + " 秒）…";
+        await new Promise((r) => setTimeout(r, 5000));
+      }
+      return false;
+    }
+
+    async function publish(clear) {
       const token = localStorage.getItem(tokenKey);
       if (!token) {
         status.textContent = "先在下面记住一个能改仓库的 GitHub token。";
-        document.querySelector("details").open = true;
+        $("details").open = true;
         return;
       }
+      const form = clear ? { notice: "" } : currentForm();
+      if (!clear && R.problems(form).length) { render(); return; }
       const buttons = document.querySelectorAll("button");
       buttons.forEach((button) => { button.disabled = true; });
-      status.textContent = "正在写到网站…";
       try {
-        const current = await fetch("https://api.github.com/repos/" + repo + "/contents/" + path, {
-          headers: {
-            Authorization: "Bearer " + token,
-            Accept: "application/vnd.github+json"
-          }
-        });
+        // 1. Upload a new image first, under a name that is not taken, and wait until the site serves it.
+        if (!clear && state.imageFile) {
+          const imageUrl = pendingImageUrl();
+          const imagePath = imageUrl.replace(siteBase, "");
+          const exists = await gh(token, imagePath, { method: "GET" });
+          if (exists.ok) throw new Error("已经有一张同名的图片，请改一下文件名再选。");
+          status.textContent = "正在上传图片…";
+          const put = await gh(token, imagePath, {
+            method: "PUT",
+            body: JSON.stringify({ message: "MainDraw notice image", content: await toBase64File(state.imageFile), branch: "main" })
+          });
+          if (!put.ok) throw new Error((await put.json()).message || "图片没有传上");
+          if (!(await waitForPublic(imageUrl))) throw new Error("图片传上了，但网站上还读不到，过几分钟再发布。");
+          state.imageUrl = imageUrl; state.imageFile = null; state.imagePreview = null;
+          form.image.url = imageUrl;
+        }
+        // 2. Write the notice file with a new card id.
+        status.textContent = "正在写到网站…";
+        const current = await gh(token, path, { method: "GET" });
         const meta = await current.json();
         if (!current.ok) throw new Error(meta.message || "读不到文件");
-        const payload = buildFile(text);
+        const payload = R.buildFile(form, R.newId());
         const body = JSON.stringify(payload, null, 2) + "\n";
-        const content = btoa(unescape(encodeURIComponent(body)));
-        const saved = await fetch("https://api.github.com/repos/" + repo + "/contents/" + path, {
+        const saved = await gh(token, path, {
           method: "PUT",
-          headers: {
-            Authorization: "Bearer " + token,
-            Accept: "application/vnd.github+json",
-            "Content-Type": "application/json"
-          },
           body: JSON.stringify({
-            message: payload.message ? "Update MainDraw home message" : "Clear MainDraw home message",
-            content,
+            message: payload.notice ? "Update MainDraw home message" : "Clear MainDraw home message",
+            content: toBase64Text(body),
             sha: meta.sha,
             branch: "main"
           })
         });
         const result = await saved.json();
         if (!saved.ok) throw new Error(result.message || "没有写上");
-        status.textContent = "已写上。手机大约一分钟后打开 Home 能看到。";
-        showPreview(text);
+        status.textContent = "已写上。手机大约 10 分钟内打开 Home 能看到。";
       } catch (error) {
         status.textContent = "没写上：" + error.message;
       } finally {
         buttons.forEach((button) => { button.disabled = false; });
+        render();
       }
     }
 
-    document.querySelector("#publish").addEventListener("click", () => writeMessage(messageBox.value));
-    document.querySelector("#clear").addEventListener("click", () => {
+    $("#publish").addEventListener("click", () => publish(false));
+    $("#clear").addEventListener("click", () => {
       messageBox.value = "";
-      showPreview("");
-      writeMessage("");
+      $("#button-label").value = "";
+      $("#image-alt").value = "";
+      state.imageUrl = null; state.imageFile = null; state.imagePreview = null; state.imageShape = null;
+      render();
+      publish(true);
     });
 
     readPublic().catch(() => {
       status.textContent = "现在读不到网站上的文件。";
+      render();
     });
   </script>
 </body>
