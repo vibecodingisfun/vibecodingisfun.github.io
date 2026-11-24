@@ -115,24 +115,40 @@
     return null;
   }
 
-  /** The text old builds and the per-platform keys show: marks removed, `store` links dropped, store lines added. */
-  function plainText(notice, key) {
+  /**
+   * The text old builds and the per-platform keys show: marks removed, `store` links dropped, and (unless
+   * `storeLinks` is false) the store lines added.
+   */
+  function plainText(notice, key, storeLinks) {
     const body = parse(notice).map((s) => {
       if (s.link === null) return s.text;
       if (s.link === "store") return s.text;
       return s.text + " " + s.link;
     }).join("");
     const lines = [body];
+    if (storeLinks === false) return body;
     if (key !== "androidMessage") lines.push("App Store: " + appStoreUrl);
     if (key !== "iosMessage") lines.push("Google Play: " + playUrl);
     return lines.join("\n");
   }
 
-  /** Problems that block publishing. `form` is { notice, accent, image: {url, alt} | null, button: {label, link} | null }. */
+  /** Which platforms get the notice; both unless the form says otherwise. */
+  function platformsOf(form) {
+    const p = form.platforms || {};
+    return { ios: p.ios !== false, android: p.android !== false };
+  }
+
+  /**
+   * Problems that block publishing. `form` is { notice, accent, image: {url, alt} | null, button: {label, link} | null,
+   * platforms: {ios, android}, storeLinks }. Platforms default to both and storeLinks to true.
+   */
   function problems(form) {
     const list = [];
     const notice = (form.notice || "").trim();
     if (!notice) return list;
+    const platforms = platformsOf(form);
+    if (!platforms.ios && !platforms.android) list.push("至少选一个平台（iPhone 或 Android）。");
+    if (form.storeLinks === false && form.button) list.push("不带更新链接时不能有按钮（按钮总是打开商店）。");
     if (plainLength(notice) > maxTextLength) list.push("文字超过 " + maxTextLength + " 个字（不算 ** 和链接符号）。");
     for (const s of parse(notice)) {
       if (s.link !== null && !resolveLink(s.link, "ios")) list.push("链接不允许：" + s.link + "（只能用 store、本站、App Store 或 Google Play）。");
@@ -150,18 +166,31 @@
     return list;
   }
 
-  /** The whole file. `id` is the publish time; Clear passes an empty notice. */
+  /**
+   * The whole file. `id` is the publish time; Clear passes an empty notice.
+   * New builds read `iosNotice` / `androidNotice` for the card text (falling back to the shared `notice`), and
+   * `iosMessage` / `androidMessage` for plain text. A platform left out gets null in both, so it shows nothing new.
+   * The shared `notice` and `message` (read by builds that predate the per-platform keys) are set only when the
+   * notice goes to both platforms.
+   */
   function buildFile(form, id) {
     const notice = (form.notice || "").trim();
-    if (!notice) return { notice: null, message: null, iosMessage: null, androidMessage: null, card: null };
+    if (!notice) {
+      return { notice: null, iosNotice: null, androidNotice: null, message: null, iosMessage: null, androidMessage: null, card: null };
+    }
+    const platforms = platformsOf(form);
+    const both = platforms.ios && platforms.android;
+    const links = form.storeLinks !== false;
     const card = { version: 1, id, accent: accents[form.accent] ? form.accent : "green" };
     if (form.image) card.image = { url: form.image.url, alt: form.image.alt.trim() };
-    if (form.button) card.button = { label: form.button.label.trim(), link: form.button.link };
+    if (form.button && links) card.button = { label: form.button.label.trim(), link: form.button.link };
     return {
-      notice,
-      message: plainText(notice, "message"),
-      iosMessage: plainText(notice, "iosMessage"),
-      androidMessage: plainText(notice, "androidMessage"),
+      notice: both ? notice : null,
+      iosNotice: platforms.ios ? notice : null,
+      androidNotice: platforms.android ? notice : null,
+      message: both ? plainText(notice, "message", links) : null,
+      iosMessage: platforms.ios ? plainText(notice, "iosMessage", links) : null,
+      androidMessage: platforms.android ? plainText(notice, "androidMessage", links) : null,
       card
     };
   }
@@ -173,7 +202,7 @@
 
   const api = {
     appStoreUrl, playUrl, accents, maxTextLength, maxLabelLength, maxImageBytes, maxImagePixels,
-    resolveLink, allowedImageUrl, parse, plainLength, shape, plainText, problems, buildFile, newId, graphemes
+    resolveLink, allowedImageUrl, parse, plainLength, shape, plainText, platformsOf, problems, buildFile, newId, graphemes
   };
   if (typeof module !== "undefined" && module.exports) module.exports = api;
   root.NoticeRules = api;
