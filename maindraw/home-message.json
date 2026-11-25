@@ -1,7 +1,11 @@
 {
-  "notice": null,
-  "message": null,
-  "iosMessage": null,
-  "androidMessage": null,
-  "card": null
+  "notice": "Now MainDraw has a \"Match Meal\" tool. It can help you decide what is the best food before and during a match.\n\nUpdate your app and try it.",
+  "message": "Now MainDraw has a \"Match Meal\" tool. It can help you decide what is the best food before and during a match.\n\nUpdate your app and try it.\nApp Store: https://apps.apple.com/app/maindraw/id6810411828\nGoogle Play: https://play.google.com/store/apps/details?id=com.botao.maindraw",
+  "iosMessage": "Now MainDraw has a \"Match Meal\" tool. It can help you decide what is the best food before and during a match.\n\nUpdate your app and try it.\nApp Store: https://apps.apple.com/app/maindraw/id6810411828",
+  "androidMessage": "Now MainDraw has a \"Match Meal\" tool. It can help you decide what is the best food before and during a match.\n\nUpdate your app and try it.\nGoogle Play: https://play.google.com/store/apps/details?id=com.botao.maindraw",
+  "card": {
+    "version": 1,
+    "id": "2026-11-25T13:54:48Z",
+    "accent": "green"
+  }
 }
