@@ -7,8 +7,12 @@
   "androidMessage": "Big match tomorrow? 🎾\n\nMatch Meal tells you what your player should eat the night before, the morning of, and between matches. Snap a photo of any meal to see how it scores.\n\nUpdate the app and try it.\nGoogle Play: https://play.google.com/store/apps/details?id=com.botao.maindraw",
   "card": {
     "version": 1,
-    "id": "2026-11-26T01:37:41Z",
+    "id": "2026-11-26T01:40:53Z",
     "accent": "green",
+    "image": {
+      "url": "https://vibecodingisfun.github.io/maindraw/notice/match-meal-score.jpg",
+      "alt": "A Match Meal score of 90, Great plate: pasta with tomato sauce, grilled chicken and a banana."
+    },
     "button": {
       "label": "Update MainDraw",
       "link": "store"
