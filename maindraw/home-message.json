@@ -1,13 +1,13 @@
 {
-  "notice": "Big match tomorrow? 🎾\n\n**Match Meal** tells you what your player should eat the night before, the morning of, and between matches. Snap a photo of any meal to see how it scores.\n\nUpdate the app and try it.",
-  "iosNotice": "Big match tomorrow? 🎾\n\n**Match Meal** tells you what your player should eat the night before, the morning of, and between matches. Snap a photo of any meal to see how it scores.\n\nUpdate the app and try it.",
-  "androidNotice": "Big match tomorrow? 🎾\n\n**Match Meal** tells you what your player should eat the night before, the morning of, and between matches. Snap a photo of any meal to see how it scores.\n\nUpdate the app and try it.",
-  "message": "Big match tomorrow? 🎾\n\nMatch Meal tells you what your player should eat the night before, the morning of, and between matches. Snap a photo of any meal to see how it scores.\n\nUpdate the app and try it.\nApp Store: https://apps.apple.com/app/maindraw/id6810411828\nGoogle Play: https://play.google.com/store/apps/details?id=com.botao.maindraw",
-  "iosMessage": "Big match tomorrow? 🎾\n\nMatch Meal tells you what your player should eat the night before, the morning of, and between matches. Snap a photo of any meal to see how it scores.\n\nUpdate the app and try it.\nApp Store: https://apps.apple.com/app/maindraw/id6810411828",
-  "androidMessage": "Big match tomorrow? 🎾\n\nMatch Meal tells you what your player should eat the night before, the morning of, and between matches. Snap a photo of any meal to see how it scores.\n\nUpdate the app and try it.\nGoogle Play: https://play.google.com/store/apps/details?id=com.botao.maindraw",
+  "notice": "Big match tomorrow? 🎾\n\n**Match Meal** tells you what your player should eat the night before, the morning of, and between matches. Snap a photo of any meal to see how it scores.",
+  "iosNotice": "Big match tomorrow? 🎾\n\n**Match Meal** tells you what your player should eat the night before, the morning of, and between matches. Snap a photo of any meal to see how it scores.",
+  "androidNotice": "Big match tomorrow? 🎾\n\n**Match Meal** tells you what your player should eat the night before, the morning of, and between matches. Snap a photo of any meal to see how it scores.",
+  "message": "Big match tomorrow? 🎾\n\nMatch Meal tells you what your player should eat the night before, the morning of, and between matches. Snap a photo of any meal to see how it scores.\nApp Store: https://apps.apple.com/app/maindraw/id6810411828\nGoogle Play: https://play.google.com/store/apps/details?id=com.botao.maindraw",
+  "iosMessage": "Big match tomorrow? 🎾\n\nMatch Meal tells you what your player should eat the night before, the morning of, and between matches. Snap a photo of any meal to see how it scores.\nApp Store: https://apps.apple.com/app/maindraw/id6810411828",
+  "androidMessage": "Big match tomorrow? 🎾\n\nMatch Meal tells you what your player should eat the night before, the morning of, and between matches. Snap a photo of any meal to see how it scores.\nGoogle Play: https://play.google.com/store/apps/details?id=com.botao.maindraw",
   "card": {
     "version": 1,
-    "id": "2026-11-26T01:40:53Z",
+    "id": "2026-11-26T02:07:39Z",
     "accent": "green",
     "image": {
       "url": "https://vibecodingisfun.github.io/maindraw/notice/match-meal-score.jpg",
