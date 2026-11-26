@@ -1,11 +1,13 @@
 {
-  "notice": "Now MainDraw has a \"Match Meal\" tool. It can help you decide what is the best food before and during a match.\n\nUpdate your app and try it.",
-  "message": "Now MainDraw has a \"Match Meal\" tool. It can help you decide what is the best food before and during a match.\n\nUpdate your app and try it.\nApp Store: https://apps.apple.com/app/maindraw/id6810411828\nGoogle Play: https://play.google.com/store/apps/details?id=com.botao.maindraw",
-  "iosMessage": "Now MainDraw has a \"Match Meal\" tool. It can help you decide what is the best food before and during a match.\n\nUpdate your app and try it.\nApp Store: https://apps.apple.com/app/maindraw/id6810411828",
-  "androidMessage": "Now MainDraw has a \"Match Meal\" tool. It can help you decide what is the best food before and during a match.\n\nUpdate your app and try it.\nGoogle Play: https://play.google.com/store/apps/details?id=com.botao.maindraw",
+  "notice": "Big match tomorrow? 🎾\n\n**Match Meal** tells you what your player should eat the night before, the morning of, and between matches. Snap a photo of any meal to see how it scores.\n\nUpdate MainDraw and try it.",
+  "iosNotice": "Big match tomorrow? 🎾\n\n**Match Meal** tells you what your player should eat the night before, the morning of, and between matches. Snap a photo of any meal to see how it scores.\n\nUpdate MainDraw and try it.",
+  "androidNotice": "Big match tomorrow? 🎾\n\n**Match Meal** tells you what your player should eat the night before, the morning of, and between matches. Snap a photo of any meal to see how it scores.\n\nUpdate MainDraw and try it.",
+  "message": "Big match tomorrow? 🎾\n\nMatch Meal tells you what your player should eat the night before, the morning of, and between matches. Snap a photo of any meal to see how it scores.\n\nUpdate MainDraw and try it.\nApp Store: https://apps.apple.com/app/maindraw/id6810411828\nGoogle Play: https://play.google.com/store/apps/details?id=com.botao.maindraw",
+  "iosMessage": "Big match tomorrow? 🎾\n\nMatch Meal tells you what your player should eat the night before, the morning of, and between matches. Snap a photo of any meal to see how it scores.\n\nUpdate MainDraw and try it.\nApp Store: https://apps.apple.com/app/maindraw/id6810411828",
+  "androidMessage": "Big match tomorrow? 🎾\n\nMatch Meal tells you what your player should eat the night before, the morning of, and between matches. Snap a photo of any meal to see how it scores.\n\nUpdate MainDraw and try it.\nGoogle Play: https://play.google.com/store/apps/details?id=com.botao.maindraw",
   "card": {
     "version": 1,
-    "id": "2026-11-25T13:54:48Z",
+    "id": "2026-11-26T01:36:37Z",
     "accent": "green"
   }
 }
