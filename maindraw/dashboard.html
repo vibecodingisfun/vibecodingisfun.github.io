@@ -163,7 +163,10 @@
     .screen.dark { background: #000; color: #f2f2f2; }
     .screen.dark .tag, .screen.dark .empty { color: #9a9a9a; }
     .card { position: relative; margin-top: 0.8rem; border-radius: 0.9rem; padding: 0.8rem 0.8rem 0.9rem; }
-    .card .img { display: block; margin: 0 auto 0.6rem; border-radius: 0.6rem; object-fit: cover; }
+    .card { display: flex; gap: 0.45rem; align-items: flex-start; }
+    .card .i { line-height: 1.4; }
+    .card .body { flex: 1; min-width: 0; }
+    .card .img { display: block; margin: 0.6rem 0 0; border-radius: 0.6rem; object-fit: cover; }
     .card .img.wide { width: 100%; aspect-ratio: 2 / 1; }
     .card .img.square { width: 60%; aspect-ratio: 1 / 1; }
     .card .text { font-size: 0.95rem; padding-right: 1.8rem; white-space: pre-wrap; }
@@ -231,8 +234,8 @@
       </div>
 
       <div class="field" id="button-field">
-        <label for="button-label">按钮文字（可选）</label>
-        <input id="button-label" type="text" maxlength="40" placeholder="Get MainDraw">
+        <label for="button-label">按钮文字（不填就是 Update MainDraw）</label>
+        <input id="button-label" type="text" maxlength="40" placeholder="Update MainDraw">
         <p class="hint">按钮在 iPhone 上打开 App Store，在 Android 上打开 Google Play。留空就没有按钮。</p>
       </div>
 
@@ -287,12 +290,16 @@
     const tokenBox = $("#token");
     const state = { accent: "green", platform: "ios", mode: "light", imageUrl: null, imageFile: null, imagePreview: null, imageShape: null };
 
+    const defaultButtonLabel = "Update MainDraw";
+
     function rgb(c) { return "rgb(" + c.map((v) => Math.round(v * 255)).join(",") + ")"; }
     function escapeHtml(t) { return t.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c])); }
 
     function currentForm() {
       const storeLinks = $("#store-links").checked;
-      const label = storeLinks ? $("#button-label").value.trim() : "";
+      // With update links on, the card always gets a button: the typed label, or "Update MainDraw". New builds show
+      // only the card, so without a button there is nothing to tap (Bo, 2026-11-25).
+      const label = storeLinks ? ($("#button-label").value.trim() || defaultButtonLabel) : "";
       const hasImage = !!(state.imageUrl || state.imageFile);
       return {
         notice: messageBox.value,
@@ -341,8 +348,9 @@
           ? '<img class="img ' + state.imageShape + '" src="' + escapeHtml(imageSrc) + '" alt="' + escapeHtml(form.image ? form.image.alt : "") + '">' : "";
         const buttonText = dark ? "#121212" : "#fff";
         const buttonHtml = form.button ? '<span class="btn" style="background:' + rgb(accent) + ";color:" + buttonText + '">' + escapeHtml(form.button.label) + "</span>" : "";
-        preview.innerHTML = '<div class="card" style="background:' + rgb(tint) + '">' + imageHtml +
-          '<div class="text"><span style="color:' + rgb(accent) + '">ⓘ</span> ' + textHtml + "</div>" + buttonHtml + '<span class="x">✕</span></div>';
+        // Same order as the apps: text, then image, then button, all lined up after the ⓘ icon.
+        preview.innerHTML = '<div class="card" style="background:' + rgb(tint) + '"><span class="i" style="color:' + rgb(accent) + '">ⓘ</span>' +
+          '<div class="body"><div class="text">' + textHtml + "</div>" + imageHtml + buttonHtml + '</div><span class="x">✕</span></div>';
         const key = state.platform === "ios" ? "iosMessage" : "androidMessage";
         $("#old").textContent = "旧版本（看不到卡片的）看到：\n" + R.plainText(notice, key, form.storeLinks);
       }
